@@ -105,7 +105,9 @@ export const createChromeHandler = <TRouter extends AnyRouter>(
         }
 
         const subscription = result.subscribe({
-          next: (data) => sendResponse({ result: { type: 'data', data } }),
+          next: (data) =>
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+            sendResponse({ result: { type: 'data', data: transformer.output.serialize(data) } }),
           error: handleError,
           complete: () => sendResponse({ result: { type: 'stopped' } }),
         });
